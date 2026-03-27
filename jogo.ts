@@ -7,19 +7,25 @@ export class Jogo {
   horas_jogadas: number;
 
   // Campos/Atributos/Características
-  constructor(nome: string, genero: string, trofeus: number, ativo: boolean, horas_jogadas: number) {
-    this.nome = nome;
-    this.genero = genero;
-    this.trofeus = trofeus;
-    this.ativo = ativo;
-    this.horas_jogadas = horas_jogadas;
+  constructor() {
+    this.nome = "";
+    this.genero = "";
+    this.trofeus = 0;
+    this.ativo = false;
+    this.horas_jogadas = 0;
   }
 
   //Comportamento/Ações
 }
 
 export class Jogador {
-  private nome: string = "";
-  private id: number = 0;
-  private apelido: string = "";
+  nome: string;
+  id: number = 0;
+  apelido: string;
+
+  constructor(nome: string, id: number, apelido: string) {
+    this.nome = nome;
+    this.id = id;
+    this.apelido = apelido;
+  }
 }
