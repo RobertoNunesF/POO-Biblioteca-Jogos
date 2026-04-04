@@ -1,7 +1,8 @@
 import prompt from "prompt-sync";
 import { Jogo } from "./jogo";
-import { Jogador } from "./jogo";
+import { gerarHtmlJogos } from "./exportador";
 import { buscarJogosSteam } from "./steam";
+import 'dotenv/config';
 
 const teclado = prompt();
 
@@ -17,6 +18,7 @@ async function main() {
     console.log("|3. Editar Jogo.           |");
     console.log("|4. Excluir Jogo.          |");
     console.log("|5. Importar da Steam.     |");
+    console.log("|6. Exportar para HTML.    |");
     console.log("|99. Sair.                 |");
     console.log("+--------------------------+");
 
@@ -61,7 +63,7 @@ async function main() {
         break;
 
       case 5:
-        const apiKey = teclado("Sua Steam API Key: ");
+        const apiKey = process.env.STEAM_API_KEY;
         const steamId = teclado("Seu Steam ID: ");
 
         console.log("Buscando jogos na Steam...");
@@ -76,12 +78,22 @@ async function main() {
             jogo.horas_jogadas = Math.round(item.playtime_forever / 60);
             jogo.trofeus = 0;
             jogo.ativo = true;
+            jogo.appId = item.appid;
             jogos.push(jogo);
           }
 
           console.log(`${dadosSteam.length} jogos importados com sucesso!`);
         } catch (erro) {
           console.log("Erro ao buscar jogos. Verifique sua API Key e Steam ID.");
+        }
+        break;
+
+
+      case 6:
+        if (jogos.length === 0) {
+          console.log("Nenhum jogo na lista para exportar!");
+        } else {
+          gerarHtmlJogos(jogos);
         }
         break;
 
