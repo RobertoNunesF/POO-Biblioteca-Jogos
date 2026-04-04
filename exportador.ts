@@ -3,7 +3,9 @@ import { Jogo } from "./jogo";
 
 
 export function gerarHtmlJogos(listaJogos: Jogo[]) {
-  const itensHtml = listaJogos.map(jogo => {
+  const listaOrdenada = [...listaJogos].sort((a, b) => (b.horas_jogadas || 0) - (a.horas_jogadas || 0));
+
+  const itensHtml = listaOrdenada.map(jogo => {
     const imagem = jogo.appId 
       ? `https://cdn.akamai.steamstatic.com/steam/apps/${jogo.appId}/header.jpg`
       : "https://via.placeholder.com/460x215?text=Sem+Imagem";
