@@ -1,0 +1,586 @@
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Minha Biblioteca de Jogos</title>
+        <style>
+            body { font-family: sans-serif; background: #1b2838; color: white; padding: 20px; }
+            h1 { text-align: center; color: #66c0f4; }
+            .grid { 
+                display: grid; 
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+                gap: 20px; 
+                padding: 20px;
+            }
+            .card { 
+                background: #2a475e; 
+                border-radius: 8px; 
+                overflow: hidden; 
+                transition: transform 0.2s;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            }
+            .card:hover { transform: scale(1.05); }
+            .card img { width: 100%; display: block; }
+            .info { padding: 15px; }
+            h3 { margin: 0 0 10px 0; font-size: 1.2em; color: #fff; }
+            p { margin: 5px 0; font-size: 0.9em; color: #acb2b8; }
+        </style>
+    </head>
+    <body>
+        <h1>Meus jogos importados!</h1>
+        <div class="grid">
+            
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/374320/header.jpg" alt="DARK SOULS™ III">
+        <div class="info">
+          <h3>DARK SOULS™ III</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 239h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/335300/header.jpg" alt="DARK SOULS™ II: Scholar of the First Sin">
+        <div class="info">
+          <h3>DARK SOULS™ II: Scholar of the First Sin</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 172h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/745920/header.jpg" alt="Temtem">
+        <div class="info">
+          <h3>Temtem</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 112h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/550/header.jpg" alt="Left 4 Dead 2">
+        <div class="info">
+          <h3>Left 4 Dead 2</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 110h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/570940/header.jpg" alt="DARK SOULS™: REMASTERED">
+        <div class="info">
+          <h3>DARK SOULS™: REMASTERED</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 45h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/582010/header.jpg" alt="Monster Hunter: World">
+        <div class="info">
+          <h3>Monster Hunter: World</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 42h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/435150/header.jpg" alt="Divinity: Original Sin 2">
+        <div class="info">
+          <h3>Divinity: Original Sin 2</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 38h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/678960/header.jpg" alt="CODE VEIN">
+        <div class="info">
+          <h3>CODE VEIN</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 34h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/295110/header.jpg" alt="Just Survive">
+        <div class="info">
+          <h3>Just Survive</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 32h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/617290/header.jpg" alt="Remnant: From the Ashes">
+        <div class="info">
+          <h3>Remnant: From the Ashes</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 31h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/485510/header.jpg" alt="Nioh: Complete Edition">
+        <div class="info">
+          <h3>Nioh: Complete Edition</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 29h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/12810/header.jpg" alt="Overlord II">
+        <div class="info">
+          <h3>Overlord II</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 28h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/373420/header.jpg" alt="Divinity: Original Sin Enhanced Edition">
+        <div class="info">
+          <h3>Divinity: Original Sin Enhanced Edition</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 25h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1097150/header.jpg" alt="Fall Guys">
+        <div class="info">
+          <h3>Fall Guys</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 21h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/21690/header.jpg" alt="Resident Evil 5">
+        <div class="info">
+          <h3>Resident Evil 5</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 20h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/706220/header.jpg" alt="Black Desert SA (Retired)">
+        <div class="info">
+          <h3>Black Desert SA (Retired)</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 20h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1158160/header.jpg" alt="Coral Island">
+        <div class="info">
+          <h3>Coral Island</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 18h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1218210/header.jpg" alt="Coromon">
+        <div class="info">
+          <h3>Coromon</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 12h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/3164500/header.jpg" alt="Schedule I">
+        <div class="info">
+          <h3>Schedule I</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 12h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/440420/header.jpg" alt="True Fear: Forsaken Souls Part 1">
+        <div class="info">
+          <h3>True Fear: Forsaken Souls Part 1</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 10h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg" alt="Portal 2">
+        <div class="info">
+          <h3>Portal 2</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 7h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/3527290/header.jpg" alt="PEAK">
+        <div class="info">
+          <h3>PEAK</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 6h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/42910/header.jpg" alt="Magicka">
+        <div class="info">
+          <h3>Magicka</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 5h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/871720/header.jpg" alt="Ultimate Custom Night">
+        <div class="info">
+          <h3>Ultimate Custom Night</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 5h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/2670630/header.jpg" alt="Supermarket Simulator">
+        <div class="info">
+          <h3>Supermarket Simulator</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 4h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/431960/header.jpg" alt="Wallpaper Engine">
+        <div class="info">
+          <h3>Wallpaper Engine</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 3h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/945360/header.jpg" alt="Among Us">
+        <div class="info">
+          <h3>Among Us</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 3h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/207610/header.jpg" alt="The Walking Dead">
+        <div class="info">
+          <h3>The Walking Dead</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 2h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/269210/header.jpg" alt="Hero Siege">
+        <div class="info">
+          <h3>Hero Siege</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 2h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg" alt="The Elder Scrolls V: Skyrim Special Edition">
+        <div class="info">
+          <h3>The Elder Scrolls V: Skyrim Special Edition</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 2h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/523650/header.jpg" alt="Lust for Darkness">
+        <div class="info">
+          <h3>Lust for Darkness</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 2h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/613100/header.jpg" alt="House Flipper">
+        <div class="info">
+          <h3>House Flipper</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 2h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/266840/header.jpg" alt="Age of Mythology: Extended Edition">
+        <div class="info">
+          <h3>Age of Mythology: Extended Edition</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/273350/header.jpg" alt="Evolve Stage 2">
+        <div class="info">
+          <h3>Evolve Stage 2</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/287290/header.jpg" alt="Resident Evil Revelations 2">
+        <div class="info">
+          <h3>Resident Evil Revelations 2</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/288160/header.jpg" alt="The Room">
+        <div class="info">
+          <h3>The Room</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/310060/header.jpg" alt="Knights of Pen and Paper 2">
+        <div class="info">
+          <h3>Knights of Pen and Paper 2</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/349040/header.jpg" alt="NARUTO SHIPPUDEN: Ultimate Ninja STORM 4">
+        <div class="info">
+          <h3>NARUTO SHIPPUDEN: Ultimate Ninja STORM 4</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/582500/header.jpg" alt="We Were Here">
+        <div class="info">
+          <h3>We Were Here</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1035120/header.jpg" alt="Lust from Beyond">
+        <div class="info">
+          <h3>Lust from Beyond</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 1h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1250/header.jpg" alt="Killing Floor">
+        <div class="info">
+          <h3>Killing Floor</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/35420/header.jpg" alt="Killing Floor Mod: Defence Alliance 2">
+        <div class="info">
+          <h3>Killing Floor Mod: Defence Alliance 2</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/221040/header.jpg" alt="Resident Evil 6">
+        <div class="info">
+          <h3>Resident Evil 6</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/222900/header.jpg" alt="Dead Island: Epidemic">
+        <div class="info">
+          <h3>Dead Island: Epidemic</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/223710/header.jpg" alt="Cry of Fear">
+        <div class="info">
+          <h3>Cry of Fear</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/230230/header.jpg" alt="Divinity: Original Sin (Classic)">
+        <div class="info">
+          <h3>Divinity: Original Sin (Classic)</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/238960/header.jpg" alt="Path of Exile">
+        <div class="info">
+          <h3>Path of Exile</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/242700/header.jpg" alt="Injustice: Gods Among Us Ultimate Edition">
+        <div class="info">
+          <h3>Injustice: Gods Among Us Ultimate Edition</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/304390/header.jpg" alt="FOR HONOR">
+        <div class="info">
+          <h3>FOR HONOR</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/304930/header.jpg" alt="Unturned">
+        <div class="info">
+          <h3>Unturned</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/346110/header.jpg" alt="ARK: Survival Evolved">
+        <div class="info">
+          <h3>ARK: Survival Evolved</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/362300/header.jpg" alt="Just Survive Test Server">
+        <div class="info">
+          <h3>Just Survive Test Server</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/407530/header.jpg" alt="ARK: Survival Of The Fittest">
+        <div class="info">
+          <h3>ARK: Survival Of The Fittest</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/424840/header.jpg" alt="Little Nightmares">
+        <div class="info">
+          <h3>Little Nightmares</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/433850/header.jpg" alt="Z1 Battle Royale">
+        <div class="info">
+          <h3>Z1 Battle Royale</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/434730/header.jpg" alt="Half dead">
+        <div class="info">
+          <h3>Half dead</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/439700/header.jpg" alt="H1Z1: Test Server">
+        <div class="info">
+          <h3>H1Z1: Test Server</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/582660/header.jpg" alt="Black Desert">
+        <div class="info">
+          <h3>Black Desert</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/654310/header.jpg" alt="For Honor - Public Test">
+        <div class="info">
+          <h3>For Honor - Public Test</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/2149010/header.jpg" alt="Little Nightmares Enhanced Edition">
+        <div class="info">
+          <h3>Little Nightmares Enhanced Edition</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/2543510/header.jpg" alt="GUNTOUCHABLES">
+        <div class="info">
+          <h3>GUNTOUCHABLES</h3>
+          <p><strong>Gênero:</strong> Steam</p>
+          <p><strong>Horas:</strong> 0h</p>
+        </div>
+      </div>
+    
+        </div>
+    </body>
+    </html>
+  

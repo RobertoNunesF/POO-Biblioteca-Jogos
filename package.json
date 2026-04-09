@@ -1,0 +1,22 @@
+{
+  "name": "aula_3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Para o jogador: colocar um boolean para saber se pode mostrar informações (nome real, id, nickname) ou se mostra somente nickname (criar condicional se o boolean for false?)",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/prompt-sync": "^4.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.1",
+    "prompt-sync": "^4.2.0"
+  }
+}
