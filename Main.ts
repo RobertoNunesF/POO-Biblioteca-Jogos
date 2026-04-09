@@ -51,11 +51,7 @@ async function main() {
         break;
 
       case 6:
-        if (jogos.length === 0) {
-          console.log("Nenhum jogo na lista para exportar!");
-        } else {
-          gerarHtmlJogos(jogos);
-        }
+        exportarHTML();
         break;
 
       case 99:
@@ -113,6 +109,14 @@ async function exportarSteam(): Promise<void> {
     console.log(`${dadosSteam.length} jogos importados com sucesso!`);
   } catch (erro) {
     console.log("Erro ao buscar jogos. Verifique sua API Key e Steam ID.");
+  }
+}
+
+function exportarHTML(): void {
+  if (jogos.length === 0) {
+    console.log("Nenhum jogo na lista para exportar!");
+  } else {
+    gerarHtmlJogos(jogos);
   }
 }
 
