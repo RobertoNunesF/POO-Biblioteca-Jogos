@@ -51,7 +51,7 @@ async function main() {
         break;
 
       case 6:
-        exportarHTML();
+        exportarHTML
         break;
 
       case 99:
@@ -65,7 +65,7 @@ async function main() {
   }
 }
 
-function cadastrarJogo(): void {
+export function cadastrarJogo(): void {
   const jogo = new Jogo();
 
   const nome = teclado("Nome do Jogo: ");

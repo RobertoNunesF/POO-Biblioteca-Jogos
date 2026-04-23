@@ -18,8 +18,8 @@ export class Jogo {
     if (!nome || nome.length <= 2) {
       throw new Error("Nome jogo inválido");
     }
-    if (!genero) {
-      throw new Error("Gênero não informado");
+    if (!genero || genero.trim().length < 3) {
+      throw new Error("Gênero inválido");
     }
 
     this.nome = nome;
