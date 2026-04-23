@@ -1,5 +1,6 @@
 import prompt from "prompt-sync";
 import { Jogo } from "./jogo";
+import { Jogador } from "./jogador";
 import { gerarHtmlJogos } from "./exportador";
 import { buscarJogosSteam } from "./steam";
 import "dotenv/config";
@@ -8,6 +9,7 @@ const teclado = prompt();
 
 let opcao = 0;
 let jogos: Jogo[] = [];
+let jogadores: Jogador[] = [];
 
 async function main() {
   while (opcao != 99) {
@@ -26,7 +28,7 @@ async function main() {
 
     switch (opcao) {
       case 0:
-        console.log("Implementação posterior");
+        cadastrarJogador();
         break;
 
       case 1:
@@ -51,7 +53,7 @@ async function main() {
         break;
 
       case 6:
-        exportarHTML
+        exportarHTML();
         break;
 
       case 99:
@@ -65,7 +67,37 @@ async function main() {
   }
 }
 
-export function cadastrarJogo(): void {
+function cadastrarJogador(): void {
+  const jogador = new Jogador();
+
+  const nome = teclado("Nome do Jogador: ");
+
+  const nickname = teclado("Nickname: ");
+
+  const email = teclado("Email: ");
+
+  const dataNascimento = teclado("Data de Nascimento (DD/MM/AAAA): ");
+
+  // trofeus e horas sao convertidos em numeros no .reduce, soma e jogo sao parametros, soma vai pegar o valor inicial 0, que foi definido no final, e somar com o numero do proximo jogo
+  const totalTrofeus = jogos.reduce((soma, jogo) => soma + jogo.trofeus, 0);
+  const totalHoras = jogos.reduce((soma, jogo) => soma + jogo.horasJogadas, 0);
+
+  try {
+    jogador.cadastrarJogador(
+      nome,
+      nickname,
+      email,
+      dataNascimento,
+      totalTrofeus,
+      totalHoras,
+    );
+    jogadores.push(jogador);
+  } catch (e) {
+    console.log((e as Error).message);
+  }
+}
+
+function cadastrarJogo(): void {
   const jogo = new Jogo();
 
   const nome = teclado("Nome do Jogo: ");
@@ -76,7 +108,8 @@ export function cadastrarJogo(): void {
 
   const horas = +teclado("Horas jogadas: ");
 
-  const visivel = teclado("Jogo visível? (S/N) ").toUpperCase().charAt(0) === "S";
+  const visivel =
+    teclado("Jogo visível? (S/N) ").toUpperCase().charAt(0) === "S";
 
   try {
     jogo.cadastrarJogo(nome, genero, trofeus, visivel, horas);
