@@ -1,6 +1,5 @@
 import { describe, expect, it, test } from "@jest/globals";
 import { Jogo } from "./jogo";
-import { cadastrarJogo } from "./Main";
 
 describe("QUANDO CADASTRAR UM NOVO JOGO", () => {
   it("DEVE LANÇAR ERRO SE O NOME FOR VAZIO", () => {

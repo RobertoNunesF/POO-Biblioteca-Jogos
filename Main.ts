@@ -15,12 +15,13 @@ async function main() {
   while (opcao != 99) {
     console.log("+--------------------------+");
     console.log("|0. Cadastrar Jogador.     |");
-    console.log("|1. Cadastrar Jogo.        |");
-    console.log("|2. Listar.                |");
-    console.log("|3. Editar Jogo.           |");
-    console.log("|4. Excluir Jogo.          |");
-    console.log("|5. Importar da Steam.     |");
-    console.log("|6. Exportar para HTML.    |");
+    console.log("|1. Listar Jogador.        |");
+    console.log("|2. Cadastrar Jogo.        |");
+    console.log("|3. Listar Jogos.          |");
+    console.log("|4. Editar Jogo.           |");
+    console.log("|5. Excluir Jogo.          |");
+    console.log("|6. Importar da Steam.     |");
+    console.log("|7. Exportar para HTML.    |");
     console.log("|99. Sair.                 |");
     console.log("+--------------------------+");
 
@@ -32,16 +33,16 @@ async function main() {
         break;
 
       case 1:
+        console.table(jogadores);
+        break;
+
+      case 2:
         cadastrarJogo();
 
         break;
 
-      case 2:
-        console.table(jogos);
-        break;
-
       case 3:
-        console.log("Implementação posterior");
+        console.table(jogos);
         break;
 
       case 4:
@@ -49,10 +50,14 @@ async function main() {
         break;
 
       case 5:
-        await exportarSteam();
+        console.log("Implementação posterior");
         break;
 
       case 6:
+        await exportarSteam();
+        break;
+
+      case 7:
         exportarHTML();
         break;
 
