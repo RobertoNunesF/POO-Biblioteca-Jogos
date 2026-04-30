@@ -1,8 +1,8 @@
 import prompt from "prompt-sync";
 import { Jogo } from "./jogo";
 import { Jogador } from "./jogador";
-import { gerarHtmlJogos } from "./exportador";
-import { buscarJogosSteam } from "./steam";
+import { gerarHtmlPerfis } from "./exportador";
+import { buscarJogosSteam, buscarPerfilSteam, buscarConquistasSteam } from "./steam";
 import "dotenv/config";
 
 const teclado = prompt();
@@ -72,6 +72,14 @@ async function main() {
   }
 }
 
+function selecionarJogador(): Jogador | null {
+  if (jogadores.length === 0) return null;
+  console.log("Jogadores cadastrados:");
+  jogadores.forEach((j, i) => console.log(`[${i + 1}] ${j.nickname}`));
+  const idx = +teclado("Selecione o jogador (número): ") - 1;
+  return (idx >= 0 && idx < jogadores.length) ? jogadores[idx] : null;
+}
+
 function cadastrarJogador(): void {
   const jogador = new Jogador();
 
@@ -106,19 +114,30 @@ function cadastrarJogo(): void {
   const jogo = new Jogo();
 
   const nome = teclado("Nome do Jogo: ");
-
   const genero = teclado("Gênero: ");
-
-  const trofeus: number = +teclado("Troféus: ");
-
   const horas = +teclado("Horas jogadas: ");
+  const visivel = teclado("Jogo visível? (S/N) ").toUpperCase().charAt(0) === "S";
 
-  const visivel =
-    teclado("Jogo visível? (S/N) ").toUpperCase().charAt(0) === "S";
+  const conquistas: { nome: string; desbloqueado: boolean; icone: string }[] = [];
+  const adicionarTrofeus = teclado("Adicionar nomes de troféus? (S/N) ").toUpperCase().charAt(0) === "S";
+  if (adicionarTrofeus) {
+    console.log("Digite o nome de cada troféu (deixe em branco para terminar):");
+    while (true) {
+      const nomeTrofeu = teclado("Troféu: ").trim();
+      if (!nomeTrofeu) break;
+      conquistas.push({ nome: nomeTrofeu, desbloqueado: true, icone: "" });
+    }
+  }
+  const trofeus = conquistas.length > 0 ? conquistas.length : +teclado("Troféus (número): ");
 
   try {
     jogo.cadastrarJogo(nome, genero, trofeus, visivel, horas);
+    jogo.conquistas = conquistas;
     jogos.push(jogo);
+    if (jogadores.length > 0) {
+      const jogador = selecionarJogador();
+      if (jogador) jogador.adicionarJogo(jogo);
+    }
   } catch (e) {
     console.log((e as Error).message);
   }
@@ -128,13 +147,19 @@ async function exportarSteam(): Promise<void> {
   const apiKey = process.env.STEAM_API_KEY;
   const steamId = teclado("Seu Steam ID: ").trim();
 
-  console.log("Buscando jogos na Steam...");
+  console.log("Buscando perfil e jogos na Steam...");
 
   try {
+    const perfil = await buscarPerfilSteam(steamId, apiKey);
     const dadosSteam = await buscarJogosSteam(steamId, apiKey);
 
+    const jogador = new Jogador();
+    jogador.nickname = perfil.personaname;
+    jogador.nome = perfil.personaname;
+    jogadores.push(jogador);
+
     for (const item of dadosSteam) {
-      let jogo: Jogo = new Jogo();
+      const jogo = new Jogo();
       jogo.nome = item.name;
       jogo.genero = "Steam";
       jogo.horasJogadas = Math.round(item.playtime_forever / 60);
@@ -142,19 +167,28 @@ async function exportarSteam(): Promise<void> {
       jogo.ativo = true;
       jogo.appId = item.appid;
       jogos.push(jogo);
+      jogador.adicionarJogo(jogo);
     }
 
-    console.log(`${dadosSteam.length} jogos importados com sucesso!`);
+    const jogosComHoras = jogador.jogos.filter(j => j.horasJogadas > 0 && j.appId !== undefined);
+    console.log(`Buscando conquistas de ${jogosComHoras.length} jogo(s) com horas jogadas...`);
+    for (const jogo of jogosComHoras) {
+      const conquistas = await buscarConquistasSteam(steamId, jogo.appId!, apiKey);
+      jogo.conquistas = conquistas;
+      jogo.trofeus = conquistas.filter(c => c.desbloqueado).length;
+    }
+
+    console.log(`Perfil "${perfil.personaname}" importado com ${dadosSteam.length} jogos!`);
   } catch (erro) {
-    console.log("Erro ao buscar jogos. Verifique sua API Key e Steam ID.");
+    console.log("Erro ao buscar dados da Steam. Verifique sua API Key e Steam ID.");
   }
 }
 
 function exportarHTML(): void {
-  if (jogos.length === 0) {
-    console.log("Nenhum jogo na lista para exportar!");
+  if (jogadores.length === 0) {
+    console.log("Nenhum jogador cadastrado para exportar!");
   } else {
-    gerarHtmlJogos(jogos);
+    gerarHtmlPerfis(jogadores);
   }
 }
 

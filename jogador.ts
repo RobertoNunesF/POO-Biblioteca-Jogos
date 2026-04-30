@@ -1,3 +1,5 @@
+import { Jogo } from "./jogo";
+
 export class Jogador {
   private _nome: string;
   private _nickname: string;
@@ -5,6 +7,7 @@ export class Jogador {
   private _dataNascimento: string;
   private _trofeus: number;
   private _horasJogadas: number;
+  private _jogos: Jogo[];
 
   constructor() {
     this._nome = "";
@@ -13,6 +16,7 @@ export class Jogador {
     this._dataNascimento = "";
     this._trofeus = 0;
     this._horasJogadas = 0;
+    this._jogos = [];
   }
 
   get nome(): string {
@@ -61,6 +65,14 @@ export class Jogador {
 
   set horasJogadas(value: number) {
     this._horasJogadas = value;
+  }
+
+  get jogos(): Jogo[] {
+    return this._jogos;
+  }
+
+  adicionarJogo(jogo: Jogo): void {
+    this._jogos.push(jogo);
   }
 
   cadastrarJogador(nome: string, nickname: string, email: string, dataNascimento: string, trofeus: number, horasJogadas: number): void {

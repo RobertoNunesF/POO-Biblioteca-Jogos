@@ -5,6 +5,7 @@ export class Jogo {
   private _ativo: boolean;
   private _horasJogadas: number;
   private _appId?: number;
+  private _conquistas: { nome: string; desbloqueado: boolean; icone: string }[];
 
   constructor() {
     this._nome = "";
@@ -12,6 +13,7 @@ export class Jogo {
     this._trofeus = 0;
     this._ativo = false;
     this._horasJogadas = 0;
+    this._conquistas = [];
   }
 
   get nome(): string {
@@ -60,6 +62,14 @@ export class Jogo {
 
   set appId(value: number | undefined) {
     this._appId = value;
+  }
+
+  get conquistas(): { nome: string; desbloqueado: boolean; icone: string }[] {
+    return this._conquistas;
+  }
+
+  set conquistas(value: { nome: string; desbloqueado: boolean; icone: string }[]) {
+    this._conquistas = value;
   }
 
   cadastrarJogo(nome: string, genero: string, trofeus: number, ativo: boolean, horasJogadas: number): void {
