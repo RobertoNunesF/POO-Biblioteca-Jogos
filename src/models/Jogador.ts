@@ -1,4 +1,4 @@
-import { Jogo } from "./jogo";
+import { Jogo } from "./Jogo";
 
 export class Jogador {
   private _nome: string;
@@ -52,6 +52,9 @@ export class Jogador {
   }
 
   set email(value: string) {
+    if (!value || !value.includes("@") || !value.includes(".")) {
+      throw new Error("Email inválido");
+    }
     this._email = value;
   }
 
@@ -60,10 +63,16 @@ export class Jogador {
   }
 
   set trofeus(value: number) {
+    if (value < 0 || !Number.isInteger(value)) {
+      throw new Error("Trofeus deve ser um número inteiro positivo");
+    }
     this._trofeus = value;
   }
 
   set horasJogadas(value: number) {
+    if (value < 0 || !Number.isInteger(value)) {
+      throw new Error("Horas jogadas deve ser um número inteiro positivo");
+    }
     this._horasJogadas = value;
   }
 
@@ -75,7 +84,22 @@ export class Jogador {
     this._jogos.push(jogo);
   }
 
-  cadastrarJogador(nome: string, nickname: string, email: string, dataNascimento: string, trofeus: number, horasJogadas: number): void {
+  getTotalHoras(): number {
+    return this._jogos.reduce((soma, jogo) => soma + jogo.horasJogadas, 0);
+  }
+
+  getTotalTrofeus(): number {
+    return this._jogos.reduce((soma, jogo) => soma + jogo.trofeus, 0);
+  }
+
+  cadastrarJogador(
+    nome: string,
+    nickname: string,
+    email: string,
+    dataNascimento: string,
+    trofeus: number,
+    horasJogadas: number,
+  ): void {
     if (!nome || nome.length <= 2) {
       throw new Error("Coloque seu nome completo");
     }
@@ -83,11 +107,11 @@ export class Jogador {
       throw new Error("Coloque seu nickname correto");
     }
 
-    this._nome = nome;
-    this._nickname = nickname;
-    this._email = email;
+    this.nome = nome;
+    this.nickname = nickname;
+    this.email = email;
     this._dataNascimento = dataNascimento;
-    this._trofeus = trofeus;
-    this._horasJogadas = horasJogadas;
+    this.trofeus = trofeus;
+    this.horasJogadas = horasJogadas;
   }
 }

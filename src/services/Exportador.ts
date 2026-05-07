@@ -1,17 +1,17 @@
 import * as fs from "fs";
-import { Jogo } from "./jogo";
-import { Jogador } from "./jogador";
-
+import { Jogo } from "../models/Jogo";
+import { Jogador } from "../models/Jogador";
 
 export function gerarHtmlJogos(listaJogos: Jogo[]) {
   const listaOrdenada = [...listaJogos].sort((a, b) => (b.horasJogadas || 0) - (a.horasJogadas || 0));
 
-  const itensHtml = listaOrdenada.map(jogo => {
-    const imagem = jogo.appId 
-      ? `https://cdn.akamai.steamstatic.com/steam/apps/${jogo.appId}/header.jpg`
-      : "https://via.placeholder.com/460x215?text=Sem+Imagem";
+  const itensHtml = listaOrdenada
+    .map((jogo) => {
+      const imagem = jogo.appId
+        ? `https://cdn.akamai.steamstatic.com/steam/apps/${jogo.appId}/header.jpg`
+        : "https://via.placeholder.com/460x215?text=Sem+Imagem";
 
-    return `
+      return `
       <div class="card">
         <img src="${imagem}" alt="${jogo.nome}">
         <div class="info">
@@ -21,7 +21,8 @@ export function gerarHtmlJogos(listaJogos: Jogo[]) {
         </div>
       </div>
     `;
-  }).join("");
+    })
+    .join("");
 
   const template = `
     <!DOCTYPE html>
@@ -66,26 +67,30 @@ export function gerarHtmlJogos(listaJogos: Jogo[]) {
 }
 
 export function gerarHtmlPerfis(jogadores: Jogador[]): void {
-  const dados = jogadores.map(j => ({
+  const dados = jogadores.map((j) => ({
     nickname: j.nickname,
     nome: j.nome,
     inicial: j.nickname.charAt(0).toUpperCase(),
     totalJogos: j.jogos.length,
-    totalHoras: j.jogos.reduce((s, jg) => s + jg.horasJogadas, 0),
-    totalTrofeus: j.jogos.reduce((s, jg) => s + jg.trofeus, 0),
-    jogos: [...j.jogos].sort((a, b) => b.horasJogadas - a.horasJogadas).map(jg => ({
-      nome: jg.nome,
-      genero: jg.genero,
-      horasJogadas: jg.horasJogadas,
-      trofeus: jg.trofeus,
-      imagem: jg.appId
-        ? "https://cdn.akamai.steamstatic.com/steam/apps/" + jg.appId + "/header.jpg"
-        : "https://via.placeholder.com/460x215?text=Sem+Imagem",
-      conquistas: jg.conquistas,
-    })),
+    totalHoras: j.getTotalHoras(),
+    totalTrofeus: j.getTotalTrofeus(),
+    jogos: [...j.jogos]
+      .sort((a, b) => b.horasJogadas - a.horasJogadas)
+      .map((jg) => ({
+        nome: jg.nome,
+        genero: jg.genero,
+        horasJogadas: jg.horasJogadas,
+        trofeus: jg.trofeus,
+        imagem: jg.appId
+          ? "https://cdn.akamai.steamstatic.com/steam/apps/" + jg.appId + "/header.jpg"
+          : "https://via.placeholder.com/460x215?text=Sem+Imagem",
+        conquistas: jg.conquistas,
+      })),
   }));
 
-  const perfilCards = dados.map((d, i) => `
+  const perfilCards = dados
+    .map(
+      (d, i) => `
     <div class="card perfil-card" onclick="mostrarBiblioteca(${i})">
       <div class="avatar">${d.inicial}</div>
       <h2>${d.nickname}</h2>
@@ -96,7 +101,9 @@ export function gerarHtmlPerfis(jogadores: Jogador[]): void {
         <span>${d.totalTrofeus} trofeus</span>
       </div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 
   const template = `<!DOCTYPE html>
 <html lang="pt-br">

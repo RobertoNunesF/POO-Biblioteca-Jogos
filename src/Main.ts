@@ -1,67 +1,59 @@
+import path from "path";
+import dotenv from "dotenv";
 import prompt from "prompt-sync";
-import { Jogo } from "./jogo";
-import { Jogador } from "./jogador";
-import { gerarHtmlPerfis } from "./exportador";
-import { buscarJogosSteam, buscarPerfilSteam, buscarConquistasSteam } from "./steam";
-import "dotenv/config";
+import { Biblioteca } from "./models/Biblioteca";
+import { Jogador } from "./models/Jogador";
+import { Jogo } from "./models/Jogo";
+import { gerarHtmlPerfis } from "./services/Exportador";
+import { buscarJogosSteam, buscarPerfilSteam, buscarConquistasSteam, resolveVanityUrl } from "./services/Steam";
+import { MENU_OPTIONS, MENU_TEXT } from "./constants/Constantes";
+
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const teclado = prompt();
 
 let opcao = 0;
-let jogos: Jogo[] = [];
-let jogadores: Jogador[] = [];
+const biblioteca = new Biblioteca();
 
 async function main() {
-  while (opcao != 99) {
-    console.log("+--------------------------+");
-    console.log("|0. Cadastrar Jogador.     |");
-    console.log("|1. Listar Jogador.        |");
-    console.log("|2. Cadastrar Jogo.        |");
-    console.log("|3. Listar Jogos.          |");
-    console.log("|4. Editar Jogo.           |");
-    console.log("|5. Excluir Jogo.          |");
-    console.log("|6. Importar da Steam.     |");
-    console.log("|7. Exportar para HTML.    |");
-    console.log("|99. Sair.                 |");
-    console.log("+--------------------------+");
-
+  while (opcao != MENU_OPTIONS.SAIR) {
+    console.log(MENU_TEXT);
     opcao = +teclado("Escolha a opção: ");
 
     switch (opcao) {
-      case 0:
+      case MENU_OPTIONS.CADASTRAR_JOGADOR:
         cadastrarJogador();
         break;
 
-      case 1:
-        console.table(jogadores);
+      case MENU_OPTIONS.LISTAR_JOGADOR:
+        console.table(biblioteca.listarJogadores());
         break;
 
-      case 2:
+      case MENU_OPTIONS.CADASTRAR_JOGO:
         cadastrarJogo();
-
         break;
 
-      case 3:
-        console.table(jogos);
+      case MENU_OPTIONS.LISTAR_JOGOS:
+        console.table(biblioteca.listarJogos());
         break;
 
-      case 4:
+      case MENU_OPTIONS.EDITAR_JOGO:
         console.log("Implementação posterior");
         break;
 
-      case 5:
+      case MENU_OPTIONS.EXCLUIR_JOGO:
         console.log("Implementação posterior");
         break;
 
-      case 6:
+      case MENU_OPTIONS.IMPORTAR_STEAM:
         await exportarSteam();
         break;
 
-      case 7:
+      case MENU_OPTIONS.EXPORTAR_HTML:
         exportarHTML();
         break;
 
-      case 99:
+      case MENU_OPTIONS.SAIR:
         console.log("Até logo!");
         break;
 
@@ -69,15 +61,23 @@ async function main() {
         console.log("Opção Inválida!");
         break;
     }
+
+    if (opcao !== MENU_OPTIONS.SAIR) {
+      pausar();
+    }
   }
 }
 
+function pausar(): void {
+  teclado("Pressione ENTER para continuar...");
+}
+
 function selecionarJogador(): Jogador | null {
-  if (jogadores.length === 0) return null;
+  if (biblioteca.listarJogadores().length === 0) return null;
   console.log("Jogadores cadastrados:");
-  jogadores.forEach((j, i) => console.log(`[${i + 1}] ${j.nickname}`));
+  biblioteca.listarJogadores().forEach((j, i) => console.log(`[${i + 1}] ${j.nickname}`));
   const idx = +teclado("Selecione o jogador (número): ") - 1;
-  return (idx >= 0 && idx < jogadores.length) ? jogadores[idx] : null;
+  return idx >= 0 && idx < biblioteca.listarJogadores().length ? biblioteca.listarJogadores()[idx] : null;
 }
 
 function cadastrarJogador(): void {
@@ -91,20 +91,13 @@ function cadastrarJogador(): void {
 
   const dataNascimento = teclado("Data de Nascimento (DD/MM/AAAA): ");
 
-  // trofeus e horas sao convertidos em numeros no .reduce, soma e jogo sao parametros, soma vai pegar o valor inicial 0, que foi definido no final, e somar com o numero do proximo jogo
-  const totalTrofeus = jogos.reduce((soma, jogo) => soma + jogo.trofeus, 0);
-  const totalHoras = jogos.reduce((soma, jogo) => soma + jogo.horasJogadas, 0);
+  // Para um novo jogador, os totais de troféus e horas começam em 0
+  const totalTrofeus = 0;
+  const totalHoras = 0;
 
   try {
-    jogador.cadastrarJogador(
-      nome,
-      nickname,
-      email,
-      dataNascimento,
-      totalTrofeus,
-      totalHoras,
-    );
-    jogadores.push(jogador);
+    jogador.cadastrarJogador(nome, nickname, email, dataNascimento, totalTrofeus, totalHoras);
+    biblioteca.adicionarJogador(jogador);
   } catch (e) {
     console.log((e as Error).message);
   }
@@ -133,8 +126,8 @@ function cadastrarJogo(): void {
   try {
     jogo.cadastrarJogo(nome, genero, trofeus, visivel, horas);
     jogo.conquistas = conquistas;
-    jogos.push(jogo);
-    if (jogadores.length > 0) {
+    biblioteca.jogos.push(jogo);
+    if (biblioteca.jogadores.length > 0) {
       const jogador = selecionarJogador();
       if (jogador) jogador.adicionarJogo(jogo);
     }
@@ -144,19 +137,30 @@ function cadastrarJogo(): void {
 }
 
 async function exportarSteam(): Promise<void> {
-  const apiKey = process.env.STEAM_API_KEY;
-  const steamId = teclado("Seu Steam ID: ").trim();
+  const apiKey = process.env.STEAM_API_KEY?.trim().replace(/^"|"$/g, "") ?? "";
+  const steamIdInput = teclado("Seu Steam ID ou vanity URL: ").trim();
+
+  if (!apiKey) {
+    console.log("STEAM_API_KEY não definida. Verifique o arquivo .env.");
+    return;
+  }
+
+  if (!steamIdInput) {
+    console.log("Steam ID inválido. Informe um SteamID64 ou vanity URL válido.");
+    return;
+  }
 
   console.log("Buscando perfil e jogos na Steam...");
 
   try {
+    const steamId = await resolveVanityUrl(steamIdInput, apiKey);
     const perfil = await buscarPerfilSteam(steamId, apiKey);
     const dadosSteam = await buscarJogosSteam(steamId, apiKey);
 
     const jogador = new Jogador();
     jogador.nickname = perfil.personaname;
     jogador.nome = perfil.personaname;
-    jogadores.push(jogador);
+    biblioteca.jogadores.push(jogador);
 
     for (const item of dadosSteam) {
       const jogo = new Jogo();
@@ -166,29 +170,29 @@ async function exportarSteam(): Promise<void> {
       jogo.trofeus = 0;
       jogo.ativo = true;
       jogo.appId = item.appid;
-      jogos.push(jogo);
+      biblioteca.jogos.push(jogo);
       jogador.adicionarJogo(jogo);
     }
 
-    const jogosComHoras = jogador.jogos.filter(j => j.horasJogadas > 0 && j.appId !== undefined);
+    const jogosComHoras = jogador.jogos.filter((j) => j.horasJogadas > 0 && j.appId !== undefined);
     console.log(`Buscando conquistas de ${jogosComHoras.length} jogo(s) com horas jogadas...`);
     for (const jogo of jogosComHoras) {
       const conquistas = await buscarConquistasSteam(steamId, jogo.appId!, apiKey);
       jogo.conquistas = conquistas;
-      jogo.trofeus = conquistas.filter(c => c.desbloqueado).length;
+      jogo.trofeus = conquistas.filter((c) => c.desbloqueado).length;
     }
 
     console.log(`Perfil "${perfil.personaname}" importado com ${dadosSteam.length} jogos!`);
   } catch (erro) {
-    console.log("Erro ao buscar dados da Steam. Verifique sua API Key e Steam ID.");
+    console.log(`Erro ao buscar dados da Steam: ${erro instanceof Error ? erro.message : String(erro)}`);
   }
 }
 
 function exportarHTML(): void {
-  if (jogadores.length === 0) {
+  if (biblioteca.jogadores.length === 0) {
     console.log("Nenhum jogador cadastrado para exportar!");
   } else {
-    gerarHtmlPerfis(jogadores);
+    gerarHtmlPerfis(biblioteca.jogadores);
   }
 }
 
