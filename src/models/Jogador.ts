@@ -1,6 +1,6 @@
 import { Jogo } from "./Jogo";
 
-export class Jogador {
+export abstract class Jogador {
   private _nome: string;
   private _nickname: string;
   private _email: string;
@@ -90,28 +90,5 @@ export class Jogador {
 
   getTotalTrofeus(): number {
     return this._jogos.reduce((soma, jogo) => soma + jogo.trofeus, 0);
-  }
-
-  cadastrarJogador(
-    nome: string,
-    nickname: string,
-    email: string,
-    dataNascimento: string,
-    trofeus: number,
-    horasJogadas: number,
-  ): void {
-    if (!nome || nome.length <= 2) {
-      throw new Error("Coloque seu nome completo");
-    }
-    if (!nickname) {
-      throw new Error("Coloque seu nickname correto");
-    }
-
-    this.nome = nome;
-    this.nickname = nickname;
-    this.email = email;
-    this._dataNascimento = dataNascimento;
-    this.trofeus = trofeus;
-    this.horasJogadas = horasJogadas;
   }
 }

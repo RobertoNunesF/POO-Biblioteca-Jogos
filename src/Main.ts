@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import prompt from "prompt-sync";
 import { Biblioteca } from "./models/Biblioteca";
 import { Jogador } from "./models/Jogador";
+import { JogadorManual } from "./models/JogadorManual";
+import { JogadorSteam } from "./models/JogadorSteam";
 import { Jogo } from "./models/Jogo";
 import { gerarHtmlPerfis } from "./services/Exportador";
 import { buscarJogosSteam, buscarPerfilSteam, buscarConquistasSteam, resolveVanityUrl } from "./services/Steam";
@@ -38,11 +40,11 @@ async function main() {
         break;
 
       case MENU_OPTIONS.EDITAR_JOGO:
-        console.log("Implementação posterior");
+        editarJogo();
         break;
 
       case MENU_OPTIONS.EXCLUIR_JOGO:
-        console.log("Implementação posterior");
+        excluirJogo();
         break;
 
       case MENU_OPTIONS.IMPORTAR_STEAM:
@@ -81,7 +83,7 @@ function selecionarJogador(): Jogador | null {
 }
 
 function cadastrarJogador(): void {
-  const jogador = new Jogador();
+  const jogador = new JogadorManual();
 
   const nome = teclado("Nome do Jogador: ");
 
@@ -136,6 +138,124 @@ function cadastrarJogo(): void {
   }
 }
 
+function editarJogo(): void {
+  console.clear();
+
+  const jogos = biblioteca.listarJogos();
+  if (jogos.length === 0) {
+    console.log("Nenhum jogo cadastrado para editar.");
+    pausar();
+    return;
+  }
+
+  console.log("Jogos cadastrados:");
+  jogos.forEach((jogo, index) =>
+    console.log(`[${index + 1}] ${jogo.nome}${jogo.appId !== undefined ? " (Steam)" : ""}`),
+  );
+
+  const numero = +teclado("Insira o número do jogo a ser alterado (0 para cancelar): ");
+  if (numero === 0 || numero < 1 || numero > jogos.length) {
+    console.log("Nenhum jogo alterado");
+    pausar();
+    return;
+  }
+
+  const jogoSelecionado = jogos[numero - 1];
+  if (jogoSelecionado.appId !== undefined) {
+    console.log("Este jogo foi importado da Steam e não pode ser editado manualmente.");
+    pausar();
+    return;
+  }
+
+  console.log(`Nome....: ${jogoSelecionado.nome}`);
+  console.log(`Gênero....: ${jogoSelecionado.genero}`);
+  console.log(`Horas....: ${jogoSelecionado.horasJogadas}`);
+  console.log(`Troféus....: ${jogoSelecionado.trofeus}`);
+  console.log(`Visível....: ${jogoSelecionado.ativo ? "Sim" : "Não"}`);
+
+  const alteracao = capitalize(
+    teclado("Insira a propriedade que gostaria de alterar (Nome, Genero, Horas, Trofeus, Visivel): ").trim(),
+  );
+  console.log();
+
+  if (alteracao === "Nome") {
+    const novaAlteracao = teclado("Insira o novo Nome: ").trim();
+    jogoSelecionado.nome = novaAlteracao;
+    console.log("Propriedade alterada com sucesso");
+  } else if (alteracao === "Genero" || alteracao === "Gênero") {
+    const novaAlteracao = teclado("Insira o novo Gênero: ").trim();
+    jogoSelecionado.genero = novaAlteracao;
+    console.log("Propriedade alterada com sucesso");
+  } else if (alteracao === "Horas") {
+    const novaAlteracao = Number(teclado("Insira a nova quantidade de Horas: "));
+    jogoSelecionado.horasJogadas = novaAlteracao;
+    console.log("Propriedade alterada com sucesso");
+  } else if (alteracao === "Troféus" || alteracao === "Trofeus") {
+    const novaAlteracao = Number(teclado("Insira o novo número de Troféus: "));
+    jogoSelecionado.trofeus = novaAlteracao;
+    console.log("Propriedade alterada com sucesso");
+  } else if (alteracao === "Visivel" || alteracao === "Visível") {
+    const novaAlteracao = teclado("Jogo visível? (S/N) ").toUpperCase().charAt(0) === "S";
+    jogoSelecionado.ativo = novaAlteracao;
+    console.log("Propriedade alterada com sucesso");
+  } else {
+    console.log("Nenhuma alteração feita");
+  }
+
+  pausar();
+}
+
+function excluirJogo(): void {
+  console.clear();
+
+  const jogos = biblioteca.listarJogos();
+  if (jogos.length === 0) {
+    console.log("Nenhum jogo cadastrado para excluir.");
+    pausar();
+    return;
+  }
+
+  console.log("Jogos cadastrados:");
+  jogos.forEach((jogo, index) =>
+    console.log(`[${index + 1}] ${jogo.nome}${jogo.appId !== undefined ? " (Steam)" : ""}`),
+  );
+
+  const numero = +teclado("Insira o número do jogo a ser excluído (0 para cancelar): ");
+  if (numero === 0 || numero < 1 || numero > jogos.length) {
+    console.log("Nenhum jogo excluído...");
+    pausar();
+    return;
+  }
+
+  const jogoSelecionado = jogos[numero - 1];
+  if (jogoSelecionado.appId !== undefined) {
+    console.log("Este jogo foi importado da Steam e não pode ser excluído manualmente.");
+    pausar();
+    return;
+  }
+
+  const indiceJogo = biblioteca.jogos.indexOf(jogoSelecionado);
+  if (indiceJogo > -1) {
+    biblioteca.jogos.splice(indiceJogo, 1);
+  }
+
+  biblioteca.listarJogadores().forEach((jogador) => {
+    const indiceJogadorJogo = jogador.jogos.indexOf(jogoSelecionado);
+    if (indiceJogadorJogo > -1) {
+      jogador.jogos.splice(indiceJogadorJogo, 1);
+    }
+  });
+
+  console.log("Jogo removido com sucesso");
+  pausar();
+}
+
+function capitalize(value: string): string {
+  const text = value.trim();
+  if (!text) return "";
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
 async function exportarSteam(): Promise<void> {
   const apiKey = process.env.STEAM_API_KEY?.trim().replace(/^"|"$/g, "") ?? "";
   const steamIdInput = teclado("Seu Steam ID ou vanity URL: ").trim();
@@ -157,7 +277,7 @@ async function exportarSteam(): Promise<void> {
     const perfil = await buscarPerfilSteam(steamId, apiKey);
     const dadosSteam = await buscarJogosSteam(steamId, apiKey);
 
-    const jogador = new Jogador();
+    const jogador = new JogadorSteam(steamId);
     jogador.nickname = perfil.personaname;
     jogador.nome = perfil.personaname;
     biblioteca.jogadores.push(jogador);

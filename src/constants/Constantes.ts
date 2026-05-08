@@ -10,7 +10,8 @@ export const MENU_OPTIONS = {
   SAIR: 99,
 };
 
-export const MENU_TEXT = `+--------------------------+
+export const MENU_TEXT = `
++--------------------------+
 |0. Cadastrar Jogador.     |
 |1. Listar Jogador.        |
 |2. Cadastrar Jogo.        |
