@@ -55,6 +55,10 @@ async function main() {
         exportarHTML();
         break;
 
+      case 9: // Exemplo de opção para Relatório Massivo
+        exibirRelatorioPolimorfico();
+        break;
+
       case MENU_OPTIONS.SAIR:
         console.log("Até logo!");
         break;
@@ -314,6 +318,34 @@ function exportarHTML(): void {
   } else {
     gerarHtmlPerfis(biblioteca.jogadores);
   }
+}
+
+/**
+ * Função que demonstra o uso de Polimorfismo para processar uma lista mista.
+ */
+function exibirRelatorioPolimorfico(): void {
+  // 1. Obtemos a lista mista (Array de Jogador - a Superclasse)
+  // Essa lista contém tanto instâncias de JogadorManual quanto de JogadorSteam.
+  const jogadores: Jogador[] = biblioteca.listarJogadores();
+
+  if (jogadores.length === 0) {
+    console.log("Nenhum jogador cadastrado para o relatório.");
+    return;
+  }
+
+  console.clear();
+  console.log("=== RELATÓRIO DE DESEMPENHO (AÇÃO EM MASSA) ===");
+
+  // 2. Percorremos a lista utilizando um loop (forEach)
+  jogadores.forEach((jogador) => {
+    // 3. AÇÃO POLIMÓRFICA:
+    // Chamamos os métodos na referência do tipo 'Jogador'.
+    // O sistema decidirá automaticamente em tempo de execução qual implementação usar:
+    // - Se for JogadorManual, usa a lógica de soma manual.
+    // - Se for JogadorSteam, usa a lógica de integração com a API/Dados Steam.
+    const resumo = `[${jogador.nickname}] -> Horas: ${jogador.getTotalHoras()}h | Troféus: ${jogador.getTotalTrofeus()}`;
+    console.log(resumo);
+  });
 }
 
 main();
