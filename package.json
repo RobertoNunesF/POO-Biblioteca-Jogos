@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/main.js",
-    "dev": "ts-node src/main.ts",
+    "dev": "ts-node src/Main.ts",
     "test": "jest"
   },
   "keywords": [],

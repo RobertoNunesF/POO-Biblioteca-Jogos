@@ -55,7 +55,7 @@ async function main() {
         exportarHTML();
         break;
 
-      case 9: // Exemplo de opção para Relatório Massivo
+      case MENU_OPTIONS.RELATORIO_JOGOS:
         exibirRelatorioPolimorfico();
         break;
 
@@ -82,8 +82,8 @@ function selecionarJogador(): Jogador | null {
   if (biblioteca.listarJogadores().length === 0) return null;
   console.log("Jogadores cadastrados:");
   biblioteca.listarJogadores().forEach((j, i) => console.log(`[${i + 1}] ${j.nickname}`));
-  const idx = +teclado("Selecione o jogador (número): ") - 1;
-  return idx >= 0 && idx < biblioteca.listarJogadores().length ? biblioteca.listarJogadores()[idx] : null;
+  const escolherJogador = +teclado("Selecione o jogador (número): ") - 1;
+  return escolherJogador >= 0 && escolherJogador < biblioteca.listarJogadores().length ? biblioteca.listarJogadores()[escolherJogador] : null;
 }
 
 function cadastrarJogador(): void {
@@ -320,12 +320,7 @@ function exportarHTML(): void {
   }
 }
 
-/**
- * Função que demonstra o uso de Polimorfismo para processar uma lista mista.
- */
 function exibirRelatorioPolimorfico(): void {
-  // 1. Obtemos a lista mista (Array de Jogador - a Superclasse)
-  // Essa lista contém tanto instâncias de JogadorManual quanto de JogadorSteam.
   const jogadores: Jogador[] = biblioteca.listarJogadores();
 
   if (jogadores.length === 0) {
@@ -336,13 +331,7 @@ function exibirRelatorioPolimorfico(): void {
   console.clear();
   console.log("=== RELATÓRIO DE DESEMPENHO (AÇÃO EM MASSA) ===");
 
-  // 2. Percorremos a lista utilizando um loop (forEach)
   jogadores.forEach((jogador) => {
-    // 3. AÇÃO POLIMÓRFICA:
-    // Chamamos os métodos na referência do tipo 'Jogador'.
-    // O sistema decidirá automaticamente em tempo de execução qual implementação usar:
-    // - Se for JogadorManual, usa a lógica de soma manual.
-    // - Se for JogadorSteam, usa a lógica de integração com a API/Dados Steam.
     const resumo = `[${jogador.nickname}] -> Horas: ${jogador.getTotalHoras()}h | Troféus: ${jogador.getTotalTrofeus()}`;
     console.log(resumo);
   });

@@ -7,6 +7,7 @@ export const MENU_OPTIONS = {
   EXCLUIR_JOGO: 5,
   IMPORTAR_STEAM: 6,
   EXPORTAR_HTML: 7,
+  RELATORIO_JOGOS: 8,
   SAIR: 99,
 };
 
@@ -20,5 +21,6 @@ export const MENU_TEXT = `
 |5. Excluir Jogo.          |
 |6. Importar da Steam.     |
 |7. Exportar para HTML.    |
+|8. Relatório de Jogos.    |
 |99. Sair.                 |
 +--------------------------+`;

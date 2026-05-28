@@ -1,13 +1,13 @@
 import { Jogo } from "./Jogo";
 
 export abstract class Jogador {
-  private _nome: string;
-  private _nickname: string;
-  private _email: string;
-  private _dataNascimento: string;
-  private _trofeus: number;
-  private _horasJogadas: number;
-  private _jogos: Jogo[];
+  protected _nome: string;
+  protected _nickname: string;
+  protected _email: string;
+  protected _dataNascimento: string;
+  protected _trofeus: number;
+  protected _horasJogadas: number;
+  protected _jogos: Jogo[];
 
   constructor() {
     this._nome = "";

@@ -2,7 +2,7 @@ import * as https from "https";
 
 function httpsGet(url: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
+    const req = https.get(url, (res) => {
       let data = "";
       res.on("data", (chunk: string) => (data += chunk));
       res.on("end", () => {
@@ -13,6 +13,11 @@ function httpsGet(url: string): Promise<string> {
         }
       });
       res.on("error", reject);
+    });
+
+    req.on("error", reject);
+    req.setTimeout(15000, () => {
+      req.destroy(new Error("Timeout de conexão ao acessar a API Steam."));
     });
   });
 }
